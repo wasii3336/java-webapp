@@ -1,0 +1,6 @@
+crud\springboot\model\Employee.class
+crud\springboot\SpringbootThymeleafCrudWebAppApplication.class
+crud\springboot\service\EmployeeService.class
+crud\springboot\controller\EmployeeController.class
+crud\springboot\repository\EmployeeRepository.class
+crud\springboot\service\EmployeeServiceImpl.class
