@@ -32,7 +32,7 @@ This Spring Boot web application is a fully functional CRUD (Create, Read, Updat
 - **Spring Data JPA**: Simplifies data access layer implementation.
 - **Spring MVC**: Framework for building web applications using the MVC pattern.
 - **Hibernate**: ORM framework for mapping Java objects to relational database tables.
-- **MySQL**: Open-source relational database management system.
+- **MySQL**: Open-sourcE relational database management system.
 - **HTML/CSS/JavaScript**: Front-end technologies for user interface development.
 - **Bootstrap**: Front-end framework for responsive and mobile-first design.
 
