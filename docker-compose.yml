@@ -20,7 +20,7 @@ services:
       retries: 10
 
   app:
-    build: .
+    image: wasi3336/springboot-ems
     container_name: springboot-ems
     depends_on:
       mysql:
