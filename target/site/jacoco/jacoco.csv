@@ -1,5 +1,5 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-springboot-thymeleaf-crud-web-app,crud.springboot.controller,EmployeeController,103,3,2,0,22,1,7,1,6,1
-springboot-thymeleaf-crud-web-app,crud.springboot.service,EmployeeServiceImpl,75,3,4,0,15,1,7,1,5,1
+springboot-thymeleaf-crud-web-app,crud.springboot.controller,EmployeeController,1,105,1,1,0,23,1,7,0,7
+springboot-thymeleaf-crud-web-app,crud.springboot.service,EmployeeServiceImpl,0,78,0,4,0,16,0,8,0,6
 springboot-thymeleaf-crud-web-app,crud.springboot,SpringbootThymeleafCrudWebAppApplication,5,3,0,0,2,1,1,1,1,1
-springboot-thymeleaf-crud-web-app,crud.springboot.model,Employee,28,3,0,0,12,1,8,1,8,1
+springboot-thymeleaf-crud-web-app,crud.springboot.model,Employee,0,43,0,0,0,19,0,10,0,10

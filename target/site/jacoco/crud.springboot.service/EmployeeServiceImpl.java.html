@@ -21,38 +21,38 @@ import crud.springboot.repository.EmployeeRepository;
 
 	@Override
 	public List&lt;Employee&gt; getAllEmployees() {
-<span class="nc" id="L24">		return employeeRepository.findAll();</span>
+<span class="fc" id="L24">		return employeeRepository.findAll();</span>
 	}
 
 	@Override
 	public void saveEmployee(Employee employee) {
-<span class="nc" id="L29">		this.employeeRepository.save(employee);</span>
-<span class="nc" id="L30">	}</span>
+<span class="fc" id="L29">		this.employeeRepository.save(employee);</span>
+<span class="fc" id="L30">	}</span>
 
 	@Override
 	public Employee getEmployeeById(long id) {
-<span class="nc" id="L34">		Optional&lt;Employee&gt; optional = employeeRepository.findById(id);</span>
-<span class="nc" id="L35">		Employee employee = null;</span>
-<span class="nc bnc" id="L36" title="All 2 branches missed.">		if (optional.isPresent()) {</span>
-<span class="nc" id="L37">			employee = optional.get();</span>
+<span class="fc" id="L34">		Optional&lt;Employee&gt; optional = employeeRepository.findById(id);</span>
+<span class="fc" id="L35">		Employee employee = null;</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">		if (optional.isPresent()) {</span>
+<span class="fc" id="L37">			employee = optional.get();</span>
 		} else {
-<span class="nc" id="L39">			throw new RuntimeException(&quot; Employee not found for id :: &quot; + id);</span>
+<span class="fc" id="L39">			throw new RuntimeException(&quot; Employee not found for id :: &quot; + id);</span>
 		}
-<span class="nc" id="L41">		return employee;</span>
+<span class="fc" id="L41">		return employee;</span>
 	}
 
 	@Override
 	public void deleteEmployeeById(long id) {
-<span class="nc" id="L46">		this.employeeRepository.deleteById(id);</span>
-<span class="nc" id="L47">	}</span>
+<span class="fc" id="L46">		this.employeeRepository.deleteById(id);</span>
+<span class="fc" id="L47">	}</span>
 
 	@Override
 	public Page&lt;Employee&gt; findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
-<span class="nc bnc" id="L51" title="All 2 branches missed.">		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :</span>
-<span class="nc" id="L52">			Sort.by(sortField).descending();</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">		Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :</span>
+<span class="fc" id="L52">			Sort.by(sortField).descending();</span>
 		
-<span class="nc" id="L54">		Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);</span>
-<span class="nc" id="L55">		return this.employeeRepository.findAll(pageable);</span>
+<span class="fc" id="L54">		Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);</span>
+<span class="fc" id="L55">		return this.employeeRepository.findAll(pageable);</span>
 	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
