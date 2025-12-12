@@ -1,4 +1,4 @@
-package crud.springboot.service;
+package crud.springboot.service.impl;
 
 import crud.springboot.model.Employee;
 import crud.springboot.service.impl.EmployeeServiceImpl;
