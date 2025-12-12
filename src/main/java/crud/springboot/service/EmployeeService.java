@@ -2,8 +2,8 @@ package crud.springboot.service;
 
 import java.util.List;
 
-import crud.springboot.stubs.Employee;
-import crud.springboot.stubs.Page;
+import org.springframework.data.domain.Page;
+import crud.springboot.model.Employee;
 
 /**
  * Service interface for Employee operations with JML specifications
