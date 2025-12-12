@@ -1,0 +1,4 @@
+crud\springboot\model\EmployeeModelTest.class
+crud\springboot\controller\EmployeeControllerTest.class
+crud\springboot\service\EmployeeServiceImplTest.class
+crud\springboot\repository\TestEmployee.class
