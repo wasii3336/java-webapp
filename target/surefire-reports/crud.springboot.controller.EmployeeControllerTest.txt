@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: crud.springboot.controller.EmployeeControllerTest
--------------------------------------------------------------------------------
-Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.551 s -- in crud.springboot.controller.EmployeeControllerTest
