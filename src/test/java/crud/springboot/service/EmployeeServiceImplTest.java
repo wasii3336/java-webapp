@@ -1,6 +1,7 @@
 package crud.springboot.service;
 
 import crud.springboot.model.Employee;
+import crud.springboot.service.impl.EmployeeServiceImpl;
 import crud.springboot.repository.EmployeeRepository;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -86,25 +87,24 @@ class EmployeeServiceImplTest {
     }
 
     @Test
-void testGetEmployeeById_NotFound() {
-    when(employeeRepository.findById(1L)).thenReturn(Optional.empty());
+    void testGetEmployeeById_NotFound() {
+        when(employeeRepository.findById(1L)).thenReturn(Optional.empty());
 
-    RuntimeException exception = assertThrows(RuntimeException.class,
-            () -> employeeService.getEmployeeById(1L));
+        RuntimeException exception = assertThrows(RuntimeException.class,
+                () -> employeeService.getEmployeeById(1L));
 
-    assertThat(exception.getMessage()).contains("Employee not found");
-}
+        assertThat(exception.getMessage()).contains("Employee not found");
+    }
 
-@Test
-void testFindPaginatedDescending() {
-    Page<Employee> page = new PageImpl<>(List.of(new Employee("X", "Y", "x@y.com")));
+    @Test
+    void testFindPaginatedDescending() {
+        Page<Employee> page = new PageImpl<>(List.of(new Employee("X", "Y", "x@y.com")));
 
-    when(employeeRepository.findAll(any(Pageable.class)))
-            .thenReturn(page);
+        when(employeeRepository.findAll(any(Pageable.class)))
+                .thenReturn(page);
 
-    Page<Employee> result = employeeService.findPaginated(1, 5, "firstName", "desc");
+        Page<Employee> result = employeeService.findPaginated(1, 5, "firstName", "desc");
 
-    assertThat(result.getContent().size()).isEqualTo(1);
-}
-
+        assertThat(result.getContent().size()).isEqualTo(1);
+    }
 }

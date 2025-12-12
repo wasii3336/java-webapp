@@ -11,8 +11,6 @@ import org.springframework.stereotype.Service;
 
 import crud.springboot.model.Employee;
 import crud.springboot.service.EmployeeService;
-import crud.springboot.stubs.Employee as StubEmployee;
-import crud.springboot.stubs.Page as StubPage;
 
 /**
  * Implementation of EmployeeService
@@ -22,10 +20,10 @@ import crud.springboot.stubs.Page as StubPage;
 public class EmployeeServiceImpl implements EmployeeService {
 
     // Internal stub repository (replace with actual stub source)
-    private final List<StubEmployee> stubList = new ArrayList<>();
+    private final List<crud.springboot.stubs.Employee> stubList = new ArrayList<>();
 
-    // Helper method: convert stub to model
-    private Employee convertToModel(StubEmployee stub) {
+    // Helper method: convert stub to model.Employee
+    private Employee convertToModel(crud.springboot.stubs.Employee stub) {
         Employee emp = new Employee();
         emp.setId(stub.getId());
         emp.setFirstName(stub.getFirstName());
@@ -36,13 +34,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getAllEmployees() {
-        return stubList.stream().map(this::convertToModel).collect(Collectors.toList());
+        return stubList.stream()
+                .map(this::convertToModel)
+                .collect(Collectors.toList());
     }
 
     @Override
     public void saveEmployee(Employee employee) {
         // Convert model to stub before saving
-        StubEmployee stub = new StubEmployee();
+        crud.springboot.stubs.Employee stub = new crud.springboot.stubs.Employee();
         stub.setId(employee.getId());
         stub.setFirstName(employee.getFirstName());
         stub.setLastName(employee.getLastName());
@@ -67,7 +67,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Page<Employee> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
         // Convert stubs to model
-        List<Employee> modelList = stubList.stream().map(this::convertToModel).collect(Collectors.toList());
+        List<Employee> modelList = stubList.stream()
+                .map(this::convertToModel)
+                .collect(Collectors.toList());
 
         // Pagination calculation
         int start = (pageNo - 1) * pageSize;
