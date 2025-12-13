@@ -1,5 +1,4 @@
 name: Snyk Security Scan
-
 on:
   push:
     branches:
@@ -22,29 +21,29 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11  # v4.1.1
+        
       - name: Set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@387ac29b308b003ca37ba93a6cab5eb57c8f5f93  # v4.0.0
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-
+          
       - name: Build project
         run: mvn clean package -DskipTests
-
+        
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/maven@master
+        uses: snyk/actions/maven@cad4fe5d32bfde83447cd264dfdefa0e0392d9ab  # master as of 2024-01
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: test
           args: --severity-threshold=high
-
+          
       - name: Run Snyk to monitor project
-        uses: snyk/actions/maven@master
+        uses: snyk/actions/maven@cad4fe5d32bfde83447cd264dfdefa0e0392d9ab  # master as of 2024-01
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
