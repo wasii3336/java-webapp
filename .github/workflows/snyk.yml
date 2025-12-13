@@ -15,10 +15,6 @@ on:
     # Run weekly on Monday at 00:00 UTC
     - cron: '0 0 * * 1'
 
-permissions:
-  contents: read
-  security-events: write
-
 jobs:
   snyk:
     name: Snyk Dependency Scan
@@ -44,10 +40,13 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --severity-threshold=high --sarif-file-output=snyk.sarif
+          command: test
+          args: --severity-threshold=high
 
-      - name: Upload Snyk results to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v4
-        if: always()
+      - name: Run Snyk to monitor project
+        uses: snyk/actions/maven@master
+        continue-on-error: true
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          sarif_file: snyk.sarif
+          command: monitor
