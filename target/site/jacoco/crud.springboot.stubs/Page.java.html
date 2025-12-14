@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Page.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">springboot-thymeleaf-crud-web-app</a> &gt; <a href="index.source.html" class="el_package">crud.springboot.stubs</a> &gt; <span class="el_source">Page.java</span></div><h1>Page.java</h1><pre class="source lang-java linenums">package crud.springboot.stubs;
+
+import java.util.List;
+
+public class Page&lt;T&gt; {
+    /*@ spec_public @*/ private List&lt;T&gt; content;
+    
+    //@ public invariant content != null;
+    
+    /*@ requires content != null;
+      @ ensures this.content == content;
+      @*/
+<span class="nc" id="L13">    public Page(List&lt;T&gt; content) {</span>
+<span class="nc" id="L14">        this.content = content;</span>
+<span class="nc" id="L15">    }</span>
+    
+    /*@ public normal_behavior
+      @   ensures \result != null;
+      @ pure
+      @*/
+    public List&lt;T&gt; getContent() {
+<span class="nc" id="L22">        return content;</span>
+    }
+    
+    /*@ public normal_behavior
+      @   ensures \result &gt;= 0;
+      @   ensures \result == content.size();
+      @ pure
+      @*/
+    public int getSize() {
+<span class="nc" id="L31">        return content.size();</span>
+    }
+    
+    /*@ public normal_behavior
+      @   ensures \result == (content.size() == 0);
+      @ pure
+      @*/
+    public boolean isEmpty() {
+<span class="nc" id="L39">        return content.isEmpty();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

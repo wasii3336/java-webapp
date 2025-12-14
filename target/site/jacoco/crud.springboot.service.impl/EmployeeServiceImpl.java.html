@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EmployeeServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">springboot-thymeleaf-crud-web-app</a> &gt; <a href="index.source.html" class="el_package">crud.springboot.service.impl</a> &gt; <span class="el_source">EmployeeServiceImpl.java</span></div><h1>EmployeeServiceImpl.java</h1><pre class="source lang-java linenums">package crud.springboot.service.impl;
+
+import crud.springboot.model.Employee;
+import crud.springboot.repository.EmployeeRepository;
+import crud.springboot.service.EmployeeService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+<span class="fc" id="L14">public class EmployeeServiceImpl implements EmployeeService {</span>
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
+    @Override
+    public List&lt;Employee&gt; getAllEmployees() {
+<span class="fc" id="L21">        return employeeRepository.findAll();</span>
+    }
+
+    @Override
+    public void saveEmployee(Employee employee) {
+        // Interface requires void, so just save and ignore returned value
+<span class="fc" id="L27">        employeeRepository.save(employee);</span>
+<span class="fc" id="L28">    }</span>
+
+@Override
+public Employee getEmployeeById(long id) {
+<span class="fc" id="L32">    return employeeRepository.findById(id)</span>
+<span class="fc" id="L33">            .orElseThrow(() -&gt; new RuntimeException(&quot;Employee not found&quot;));</span>
+}
+
+
+    @Override
+    public void deleteEmployeeById(long id) {
+<span class="fc" id="L39">        employeeRepository.deleteById(id);</span>
+<span class="fc" id="L40">    }</span>
+
+    @Override
+    public Page&lt;Employee&gt; findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        Sort sort = sortDirection.equalsIgnoreCase(&quot;asc&quot;) ?</span>
+<span class="fc" id="L46">                Sort.by(sortField).ascending() :</span>
+<span class="fc" id="L47">                Sort.by(sortField).descending();</span>
+
+<span class="fc" id="L49">        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);</span>
+
+<span class="fc" id="L51">        return employeeRepository.findAll(pageable);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
