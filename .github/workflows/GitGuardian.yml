@@ -1,0 +1,29 @@
+name: GitGuardian Secret Scan
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ggshield-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install ggshield
+        run: pip install ggshield
+
+      - name: Run GitGuardian secret scan
+        env:
+          GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIANKEY }}
+        run: |
+          # Scan src/ folder only, ignore target/ and other build directories
+          ggshield secret scan path --exclude target/ --exclude .gradle/ src/

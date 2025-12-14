@@ -8,8 +8,23 @@ on:
 
 jobs:
 
+  secret-scanning:
+    name: GitGuardian Secret Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for better detection
+      
+      - name: GitGuardian Scan
+        uses: GitGuardian/ggshield-action@v1
+        env:
+          GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
+
   build-app:
     name: Build & Test Spring Boot App
+    needs: secret-scanning
     runs-on: ubuntu-latest
 
     steps:
