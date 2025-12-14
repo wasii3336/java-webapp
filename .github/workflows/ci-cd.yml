@@ -17,7 +17,7 @@ jobs:
           fetch-depth: 0  # Full history for better detection
       
       - name: GitGuardian Scan
-        uses: GitGuardian/ggshield-action@3d97bc2c6e9f21874e2da57dda7e1c6e7c4d0e9a  # v1.31.0
+        uses: GitGuardian/ggshield-action@v1.33.0
         env:
           GITGUARDIAN_API_KEY: ${{ secrets.GITGUARDIAN_API_KEY }}
 
