@@ -1,0 +1,11 @@
+# Build folders
+target/
+.gradle/
+
+# GitGuardian CLI cache
+.cache_ggshield/
+
+# IDE files (optional)
+*.iml
+.idea/
+.vscode/
