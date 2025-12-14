@@ -2,6 +2,9 @@
 
 import jakarta.persistence.*;
 
+/**
+ * Employee entity with JML formal specifications
+ */
 @Entity
 @Table(name = &quot;employees&quot;)
 public class Employee {
@@ -19,47 +22,110 @@ public class Employee {
     @Column(name = &quot;email&quot;)
     private String email;
 
-    // REQUIRED BY JPA - WITHOUT THIS TABLE IS NOT CREATED
-<span class="fc" id="L23">    public Employee() {</span>
-<span class="fc" id="L24">    }</span>
+    //@ public invariant firstName == null || firstName.length() &gt; 0;
+    //@ public invariant lastName == null || lastName.length() &gt; 0;
+    //@ public invariant email == null || email.contains(&quot;@&quot;);
 
-    // Optional convenience constructor
-<span class="fc" id="L27">    public Employee(String firstName, String lastName, String email) {</span>
-<span class="fc" id="L28">        this.firstName = firstName;</span>
-<span class="fc" id="L29">        this.lastName = lastName;</span>
-<span class="fc" id="L30">        this.email = email;</span>
-<span class="fc" id="L31">    }</span>
+    /**
+     * Default constructor required by JPA
+     */
+    //@ ensures getId() == 0;
+<span class="fc" id="L33">    public Employee() {</span>
+<span class="fc" id="L34">    }</span>
 
+    /**
+     * Convenience constructor for creating employees
+     * @param firstName Employee's first name
+     * @param lastName Employee's last name
+     * @param email Employee's email address
+     */
+    //@ requires firstName != null &amp;&amp; firstName.length() &gt; 0;
+    //@ requires lastName != null &amp;&amp; lastName.length() &gt; 0;
+    //@ requires email != null &amp;&amp; email.contains(&quot;@&quot;);
+    //@ ensures getFirstName().equals(firstName);
+    //@ ensures getLastName().equals(lastName);
+    //@ ensures getEmail().equals(email);
+<span class="fc" id="L48">    public Employee(String firstName, String lastName, String email) {</span>
+<span class="fc" id="L49">        this.firstName = firstName;</span>
+<span class="fc" id="L50">        this.lastName = lastName;</span>
+<span class="fc" id="L51">        this.email = email;</span>
+<span class="fc" id="L52">    }</span>
+
+    /**
+     * Get employee ID
+     * @return The employee ID
+     */
+    //@ ensures \result &gt;= 0;
+    //@ pure
     public long getId() {
-<span class="fc" id="L34">        return id;</span>
+<span class="fc" id="L61">        return id;</span>
     }
 
+    /**
+     * Set employee ID
+     * @param id The employee ID to set
+     */
+    //@ requires id &gt;= 0;
+    //@ ensures getId() == id;
     public void setId(long id) {
-<span class="fc" id="L38">        this.id = id;</span>
-<span class="fc" id="L39">    }</span>
+<span class="fc" id="L71">        this.id = id;</span>
+<span class="fc" id="L72">    }</span>
 
+    /**
+     * Get employee first name
+     * @return The first name
+     */
+    //@ pure
     public String getFirstName() {
-<span class="fc" id="L42">        return firstName;</span>
+<span class="fc" id="L80">        return firstName;</span>
     }
 
+    /**
+     * Set employee first name
+     * @param firstName The first name to set
+     */
+    //@ requires firstName != null &amp;&amp; firstName.length() &gt; 0;
+    //@ ensures getFirstName().equals(firstName);
     public void setFirstName(String firstName) {
-<span class="fc" id="L46">        this.firstName = firstName;</span>
-<span class="fc" id="L47">    }</span>
+<span class="fc" id="L90">        this.firstName = firstName;</span>
+<span class="fc" id="L91">    }</span>
 
+    /**
+     * Get employee last name
+     * @return The last name
+     */
+    //@ pure
     public String getLastName() {
-<span class="fc" id="L50">        return lastName;</span>
+<span class="fc" id="L99">        return lastName;</span>
     }
 
+    /**
+     * Set employee last name
+     * @param lastName The last name to set
+     */
+    //@ requires lastName != null &amp;&amp; lastName.length() &gt; 0;
+    //@ ensures getLastName().equals(lastName);
     public void setLastName(String lastName) {
-<span class="fc" id="L54">        this.lastName = lastName;</span>
-<span class="fc" id="L55">    }</span>
+<span class="fc" id="L109">        this.lastName = lastName;</span>
+<span class="fc" id="L110">    }</span>
 
+    /**
+     * Get employee email
+     * @return The email address
+     */
+    //@ pure
     public String getEmail() {
-<span class="fc" id="L58">        return email;</span>
+<span class="fc" id="L118">        return email;</span>
     }
 
+    /**
+     * Set employee email
+     * @param email The email address to set
+     */
+    //@ requires email != null &amp;&amp; email.contains(&quot;@&quot;);
+    //@ ensures getEmail().equals(email);
     public void setEmail(String email) {
-<span class="fc" id="L62">        this.email = email;</span>
-<span class="fc" id="L63">    }</span>
+<span class="fc" id="L128">        this.email = email;</span>
+<span class="fc" id="L129">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

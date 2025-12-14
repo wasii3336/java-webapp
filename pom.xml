@@ -226,6 +226,21 @@
                 <!-- NOT bound to any phase - run manually with: mvn dependency-check:check -->
             </plugin>
 
+            <!-- OpenJML for JML Verification -->
+            <plugin>
+                <groupId>org.openjml</groupId>
+                <artifactId>openjml-maven-plugin</artifactId>
+                <version>0.17.0</version>
+                <configuration>
+                    <esc>true</esc>
+                    <rac>false</rac>
+                    <source>17</source>
+                    <target>17</target>
+                    <includeTests>false</includeTests>
+                </configuration>
+                <!-- NOT bound to any phase - run manually with: mvn openjml:check -->
+            </plugin>
+
         </plugins>
     </build>
 
