@@ -10,7 +10,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.4.11</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
 
     <groupId>net.javaguides</groupId>
@@ -19,13 +19,19 @@
 
     <properties>
         <java.version>17</java.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
         <jmh.version>1.37</jmh.version>
         <junit-jupiter.version>5.11.4</junit-jupiter.version>
     </properties>
 
+    <!-- ================= DEPENDENCIES ================= -->
+
     <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
         <!-- Spring Boot -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -40,12 +46,11 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- Database -->
+        <!-- Databases -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <scope>runtime</scope>
-            <!-- Version managed by Spring Boot parent - now 8.4.0 (secure) -->
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -81,7 +86,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- JMH for Microbenchmarks -->
+        <!-- JMH -->
         <dependency>
             <groupId>org.openjdk.jmh</groupId>
             <artifactId>jmh-core</artifactId>
@@ -102,37 +107,58 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-
     </dependencies>
+
+    <!-- ================= BUILD ================= -->
 
     <build>
         <plugins>
 
-            <!-- Spring Boot Maven -->
+            <!-- Spring Boot -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!-- Surefire for JUnit 5 -->
+            <!-- Surefire -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.5.2</version>
                 <configuration>
-                    <includes>
-                        <include>**/*Test.java</include>
-                        <include>**/*Tests.java</include>
-                    </includes>
                     <useModulePath>false</useModulePath>
-                    <forkCount>1</forkCount>
-                    <reuseForks>true</reuseForks>
-                    <!-- Use @{argLine} to preserve JaCoCo's agent configuration -->
                     <argLine>@{argLine} --add-opens=java.base/java.lang=ALL-UNNAMED</argLine>
                 </configuration>
             </plugin>
 
-            <!-- Pitest Mutation Testing -->
+            <!-- JaCoCo (FIXED + STUBS EXCLUDED) -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.11</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/stubs/**</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- PIT Mutation Testing -->
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
@@ -151,62 +177,10 @@
                         <param>crud.springboot.controller.*</param>
                         <param>crud.springboot.repository.*</param>
                     </targetClasses>
-                    <targetTests>
-                        <param>crud.springboot.*Test</param>
-                    </targetTests>
                     <excludedClasses>
                         <param>crud.springboot.SpringbootThymeleafCrudWebAppApplication</param>
                     </excludedClasses>
-                    <threads>4</threads>
-                    <outputFormats>
-                        <param>HTML</param>
-                        <param>XML</param>
-                    </outputFormats>
-                    <timestampedReports>false</timestampedReports>
-                    <mutators>
-                        <mutator>DEFAULTS</mutator>
-                    </mutators>
-                    <!-- PIT-specific JVM args -->
-                    <jvmArgs>
-                        <jvmArg>--add-opens=java.base/java.lang=ALL-UNNAMED</jvmArg>
-                        <jvmArg>--add-opens=java.base/java.util=ALL-UNNAMED</jvmArg>
-                        <jvmArg>--add-opens=java.base/java.io=ALL-UNNAMED</jvmArg>
-                        <jvmArg>--add-opens=java.base/sun.nio.ch=ALL-UNNAMED</jvmArg>
-                        <jvmArg>--add-opens=java.base/java.nio=ALL-UNNAMED</jvmArg>
-                        <jvmArg>--add-opens=java.base/java.lang.reflect=ALL-UNNAMED</jvmArg>
-                    </jvmArgs>
                 </configuration>
-            </plugin>
-
-            <!-- JaCoCo for code coverage -->
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.11</version>
-                <executions>
-                    <execution>
-                        <id>prepare-agent</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!-- Exec Maven Plugin for JMH -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.1.0</version>
-                <!-- JMH benchmarks are NOT run during normal build -->
-                <!-- Run manually with: mvn exec:java -Dexec.mainClass="crud.springboot.benchmark.BenchmarkRunner" -Dexec.classpathScope=test -->
             </plugin>
 
             <!-- OWASP Dependency Check -->
@@ -214,19 +188,9 @@
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
                 <version>9.0.9</version>
-                <configuration>
-                    <failBuildOnCVSS>7</failBuildOnCVSS>
-                    <formats>
-                        <format>HTML</format>
-                        <format>JSON</format>
-                    </formats>
-                    <nvdApiKey>${env.NVD_API_KEY}</nvdApiKey>
-                    <nvdApiDelay>6000</nvdApiDelay>
-                </configuration>
-                <!-- NOT bound to any phase - run manually with: mvn dependency-check:check -->
             </plugin>
 
-            <!-- OpenJML for JML Verification -->
+            <!-- OpenJML -->
             <plugin>
                 <groupId>org.openjml</groupId>
                 <artifactId>openjml-maven-plugin</artifactId>
@@ -236,61 +200,10 @@
                     <rac>false</rac>
                     <source>17</source>
                     <target>17</target>
-                    <includeTests>false</includeTests>
                 </configuration>
-                <!-- NOT bound to any phase - run manually with: mvn openjml:check -->
             </plugin>
 
         </plugins>
     </build>
-
-    <profiles>
-        <!-- Profile for running JMH benchmarks -->
-        <profile>
-            <id>benchmark</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <version>3.1.0</version>
-                        <executions>
-                            <execution>
-                                <phase>test</phase>
-                                <goals>
-                                    <goal>java</goal>
-                                </goals>
-                                <configuration>
-                                    <mainClass>crud.springboot.benchmark.BenchmarkRunner</mainClass>
-                                    <classpathScope>test</classpathScope>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <!-- Profile for PIT mutation testing -->
-        <profile>
-            <id>pitest</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>3.5.2</version>
-                        <configuration>
-                            <useModulePath>false</useModulePath>
-                            <forkCount>1</forkCount>
-                            <reuseForks>true</reuseForks>
-                            <!-- For PIT: don't use @{argLine} -->
-                            <argLine>--add-opens=java.base/java.lang=ALL-UNNAMED</argLine>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 
 </project>

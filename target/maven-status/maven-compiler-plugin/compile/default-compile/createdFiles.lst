@@ -1,9 +1,0 @@
-crud\springboot\SpringbootThymeleafCrudWebAppApplication.class
-crud\springboot\service\EmployeeService.class
-crud\springboot\stubs\Employee.class
-crud\springboot\utils\EmployeeUtils.class
-crud\springboot\controller\EmployeeController.class
-crud\springboot\repository\EmployeeRepository.class
-crud\springboot\service\impl\EmployeeServiceImpl.class
-crud\springboot\model\Employee.class
-crud\springboot\stubs\Page.class
